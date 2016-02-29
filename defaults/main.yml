@@ -1,0 +1,23 @@
+docker_influxdb_name: influxdb
+docker_influxdb_image: tutum/influxdb:latest
+docker_influxdb_data_dir: /opt/influxdb/data/
+docker_influxdb_memory_limit: 512MB
+docker_influxdb_net: default
+docker_influxdb_expose:
+  - 8083
+  - 8086
+docker_influxdb_ports:
+  - 8083:8083
+  - 8086:8086
+docker_influxdb_volumes:
+  - "{{ docker_influxdb_data_dir }}:/data"
+docker_influxdb_env:
+  PRE_CREATE_DB: "db1"
+  ADMIN_USER: "root"
+  INFLUXDB_INIT_PWD: "somepassword"
+docker_influxdb_links: []
+docker_influxdb_log_driver: syslog
+docker_influxdb_log_opt:
+  syslog-facility: local0
+  syslog-tag: influxdb
+docker_api_version: 1.21

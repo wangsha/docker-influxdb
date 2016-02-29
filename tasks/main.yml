@@ -1,0 +1,32 @@
+- name: Ensure docker influxdb data directories exist
+  become: yes
+  file:
+    state: directory
+    path: "{{ item }}"
+  with_items:
+    - "{{ docker_influxdb_data_dir }}"
+  tags:
+    - install
+    - upgrade
+
+
+- name: Run docker influxdb container
+  become: true
+  docker:
+    docker_api_version: "{{ docker_api_version }}"
+    env: "{{ docker_influxdb_env }}"
+    expose: "{{ docker_influxdb_expose }}"
+    image: "{{ docker_influxdb_image }}"
+    name: "{{ docker_influxdb_name }}"
+    ports: "{{ docker_influxdb_ports }}"
+    links: "{{ docker_influxdb_links }}"
+    volumes: "{{ docker_influxdb_volumes }}"
+    memory_limit: "{{ docker_influxdb_memory_limit }}"
+    log_driver: "{{ docker_influxdb_log_driver }}"
+    log_opt: "{{ docker_influxdb_log_opt }}"
+    pull: always
+    restart_policy: always
+    state: reloaded
+  tags:
+    - install
+    - upgrade
