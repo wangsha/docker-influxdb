@@ -1,5 +1,4 @@
 - name: Ensure docker influxdb data directories exist
-  become: yes
   file:
     state: directory
     path: "{{ item }}"
@@ -9,9 +8,12 @@
     - install
     - upgrade
 
+- name: Force remove existing influxdb containers
+  command: "docker rm -f {{ docker_influxdb_name }}"
+  ignore_errors: yes
+  when: docker_influxdb_force_remove
 
 - name: Run docker influxdb container
-  become: true
   docker:
     docker_api_version: "{{ docker_api_version }}"
     env: "{{ docker_influxdb_env }}"
