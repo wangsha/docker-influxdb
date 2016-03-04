@@ -11,7 +11,7 @@ docker_influxdb_ports:
   - 8083:8083
   - 8086:8086
 
-docker_influxdb_data_dir: /opt/influxdb/data/
+docker_influxdb_data_dir: "/opt/{{ docker_influxdb_name }}/data/"
 docker_influxdb_directory_volumes:
   - "{{ docker_influxdb_data_dir }}:/data"
 docker_influxdb_file_volumes: []
@@ -24,7 +24,7 @@ docker_influxdb_links: []
 docker_influxdb_log_driver: syslog
 docker_influxdb_log_opt:
   syslog-facility: local0
-  syslog-tag: influxdb
+  syslog-tag: "{{ docker_influxdb_name }}"
 docker_api_version: 1.21
 
 # work around error: Failed to remove container (XXX): Error response from daemon: Unable to remove filesystem for XXX: remove /var/lib/docker/containers/XXX/shm: device or resource busy
