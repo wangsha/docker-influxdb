@@ -1,12 +1,13 @@
-- name: Ensure docker influxdb data directories exist
+- name: Ensure docker influxdb volume mapping host directories exist
   file:
     state: directory
-    path: "{{ item }}"
+    path: "{{ item | regex_replace('^(?P<host>.+):(?P<container>.+)$', '\\g<host>')}}"
   with_items:
-    - "{{ docker_influxdb_data_dir }}"
+    - "{{ docker_influxdb_directory_volumes }}"
   tags:
     - install
     - upgrade
+
 
 - name: Force remove existing influxdb containers
   command: "docker rm -f {{ docker_influxdb_name }}"
