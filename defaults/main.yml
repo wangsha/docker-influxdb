@@ -13,7 +13,7 @@ docker_influxdb_ports:
 
 docker_influxdb_data_dir: "/opt/{{ docker_influxdb_name }}/data/"
 docker_influxdb_directory_volumes:
-  - "{{ docker_influxdb_data_dir }}:/data"
+  - "{{ docker_influxdb_data_dir }}:/data:rw"
 docker_influxdb_file_volumes: []
 docker_influxdb_volumes: "{{ docker_influxdb_directory_volumes + docker_influxdb_file_volumes }}"
 docker_influxdb_env:

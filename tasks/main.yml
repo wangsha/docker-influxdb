@@ -1,9 +1,32 @@
-- name: Ensure docker influxdb volume mapping host directories exist
+- name: Ensure docke volume mapping host directories exist
   file:
     state: directory
-    path: "{{ item | regex_replace('^(?P<host>.+):(?P<container>.+)$', '\\g<host>')}}"
+    path: "{{ item | regex_replace('^(?P<host>.+):(?P<container>.+):(?P<mode>.+)', '\\g<host>') }}"
   with_items:
     - "{{ docker_influxdb_directory_volumes }}"
+  tags:
+    - install
+    - upgrade
+
+
+- name: Ensure docker volume mapping host file directories exist
+  file:
+    state: directory
+    path: "{{ item | regex_replace('^(?P<host>.+):(?P<container>.+):(?P<mode>.+)', '\\g<host>') | dirname }}"
+  with_items:
+    - "{{ docker_influxdb_file_volumes }}"
+  tags:
+    - install
+    - upgrade
+
+
+- name: Copy docker volume mapping host file
+  template:
+    src="{{ docker_influxdb_template_path }}{{ item | regex_replace('^(?P<host>.+):(?P<container>.+):(?P<mode>.+)', '\\g<host>') | basename }}.j2"
+    dest="{{ item | regex_replace('^(?P<host>.+):(?P<container>.+):(?P<mode>.+)', '\\g<host>') }}"
+    mode='0644'
+  with_items:
+    - "{{ docker_influxdb_file_volumes }}"
   tags:
     - install
     - upgrade
@@ -13,6 +36,7 @@
   command: "docker rm -f {{ docker_influxdb_name }}"
   ignore_errors: yes
   when: docker_influxdb_force_remove
+
 
 - name: Run docker influxdb container
   docker:
