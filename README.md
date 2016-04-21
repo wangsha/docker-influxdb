@@ -64,8 +64,8 @@ Example Config:
 ```yaml
 docker_influxdb_file_volumes:
   - '/opt/myapp/conf/settings.conf:/etc/myapp/conf/settings.conf:ro'
-docker_influxdb_template_path: /path/to/ansible/project/templates
-# make sure file /path/to/ansible/project/templates/settings.conf.j2 exists. 
+docker_influxdb_template_path: /path/to/ansible/project/templates/
+# make sure file /path/to/ansible/project/templates//settings.conf.j2 exists. 
 ```
 
 
