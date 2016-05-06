@@ -38,14 +38,6 @@ that can be overridden.
 If you need a playbook to set Docker itself, have a look at [angstwad.docker_ubuntu](https://github.com/angstwad/docker.ubuntu) Galaxy
 role.
 
-Known Issue:
-You might encounter following errors when using this role without volume mapping.
-
-```bash
-Failed to remove container (XXX): Error response from daemon: Unable to remove filesystem for XXX: remove /var/lib/docker/containers/XXX/shm: device or resource busy
-```
-To work around this set `docker_influxdb_force_remove` to `true`.
-
 
 Custom volume mappings
 ----------------------

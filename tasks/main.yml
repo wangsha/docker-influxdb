@@ -32,10 +32,15 @@
     - upgrade
 
 
-- name: Force remove existing influxdb containers
-  command: "docker rm -f {{ docker_influxdb_name }}"
-  ignore_errors: yes
-  when: docker_influxdb_force_remove
+- name: Remove existing {{ docker_influxdb_name }} container
+  docker:
+    docker_api_version: "{{ docker_api_version }}"
+    image: "{{ docker_influxdb_image }}"
+    name: "{{ docker_influxdb_name }}"
+    state: absent
+  tags:
+    - install
+    - upgrade
 
 
 - name: Run docker influxdb container
