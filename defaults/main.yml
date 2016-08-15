@@ -24,5 +24,5 @@ docker_influxdb_links: []
 docker_influxdb_log_driver: syslog
 docker_influxdb_log_opt:
   syslog-facility: local0
-  syslog-tag: "{{ docker_influxdb_name }}"
+  tag: "{{ docker_influxdb_name }}"
 docker_api_version: 1.21
